@@ -1,0 +1,23 @@
+{
+  "name": "dside",
+  "version": "0.0.0",
+  "description": "decentralized consensus proof of concept",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/* -r spec",
+    "postinstall": "npm run setup",
+    "setup": "node scripts/setup.js"
+  },
+  "author": "Gordon Hall <gordon@gordonwritescode.com>",
+  "license": "GPLv3",
+  "dependencies": {
+    "bitauth": "^0.1.1",
+    "cli-color": "^0.3.2",
+    "commander": "^2.3.0",
+    "footon": "^0.3.10"
+  },
+  "devDependencies": {
+    "mocha": "^1.21.4",
+    "should": "^4.0.4"
+  }
+}
