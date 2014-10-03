@@ -1,8 +1,12 @@
 {
-  "name": "dside",
+  "name": "dsided",
   "version": "0.0.0",
   "description": "decentralized consensus proof of concept",
   "main": "index.js",
+  "bin": {
+    "dsided": "bin/dsided.js",
+    "dside": "bin/dside.js"
+  },
   "scripts": {
     "test": "mocha test/* -r spec",
     "postinstall": "npm run setup",
@@ -12,8 +16,10 @@
   "license": "GPLv3",
   "dependencies": {
     "bitauth": "^0.1.1",
+    "body-parser": "^1.9.0",
     "cli-color": "^0.3.2",
     "commander": "^2.3.0",
+    "express": "^4.9.5",
     "footon": "^0.3.10"
   },
   "devDependencies": {
