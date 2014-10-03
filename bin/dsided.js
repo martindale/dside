@@ -5,6 +5,11 @@ var config  = require(process.env.HOME + '/.dside/config');
 var dside   = require('../');
 var program = require('commander');
 var log     = require('../lib/log');
+var bitauth = require('bitauth');
+var fs      = require('fs');
+var privKey = fs.readFileSync(process.env.HOME + '/.dside/key');
+var pubKey  = bitauth.getPublicKeyFromPrivateKey(privKey);
+var id      = bitauth.getSinFromPublicKey(pubKey);
 
 program
   .option(
@@ -30,6 +35,8 @@ if (program.nodes) {
 }
 
 console.log(require('cli-color').green(logo));
+
+log.custom('identity', id);
 
 dside.createFullNode(options).init(function(err) {
   if (err) return log.warn(err.message);
