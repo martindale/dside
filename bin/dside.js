@@ -10,8 +10,6 @@ program
   .version(require('../package').version)
   .option('-p, --port [port]', config.port)
 
-var client  = new RPC(program.port);
-
 program
   .command('vote')
   .option('-t, --topic <topic>', 'topic for submitted answer')
@@ -20,6 +18,8 @@ program
     if (!env.topic || !env.answer) {
       return log.err('a topic and answer are required to vote')
     }
+
+    var client  = new RPC(program.port);
 
     client.send(env.topic, env.answer, function(err) {
       if (err) {
@@ -37,6 +37,8 @@ program
     if (!env.topic) {
       return log.err('a topic is required to gain consensus')
     }
+
+    var client  = new RPC(program.port);
 
     client.read(env.topic, function(err, results) {
       if (err) {
