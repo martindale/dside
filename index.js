@@ -3,7 +3,7 @@ var Server   = require('./lib/server');
 var FullNode = require('./lib/fullnode');
 
 module.exports = {
-  createServer: function(port) {
+  createServer: function(port, client) {
     return new Server(port);
   },
   createClient: function(nodes) {
