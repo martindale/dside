@@ -20,7 +20,8 @@
     "cli-color": "^0.3.2",
     "commander": "^2.3.0",
     "express": "^4.9.5",
-    "footon": "^0.3.10"
+    "footon": "^0.3.10",
+    "carrier": "^0.1.14"
   },
   "devDependencies": {
     "mocha": "^1.21.4",
