@@ -7,7 +7,7 @@ var program = require('commander');
 var log     = require('../lib/log');
 var bitauth = require('bitauth');
 var fs      = require('fs');
-var privKey = fs.readFileSync(process.env.HOME + '/.dside/key');
+var privKey = fs.readFileSync(process.env.HOME + '/.dside/key').toString();
 var pubKey  = bitauth.getPublicKeyFromPrivateKey(privKey);
 var id      = bitauth.getSinFromPublicKey(pubKey);
 
