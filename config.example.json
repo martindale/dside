@@ -1,0 +1,16 @@
+{
+  "address": "127.0.0.1",
+  "port": 8133,
+  "seeds": [
+    { "address": "", "port": 8133 }
+  ],
+  "trust": [
+    "*"
+  ],
+  "minPeers": 3,
+  "maxPeers": 12,
+  "pingTimeout": 3000,
+  "storageFile": "dside.tiny",
+  "privateKey": "identity.key",
+  "publicKey": "identity.pub"
+}
