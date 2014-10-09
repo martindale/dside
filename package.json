@@ -7,7 +7,7 @@
     "dside": "bin/dside.js"
   },
   "scripts": {
-    "test": "mocha test/* -r spec",
+    "test": "NODE_ENV=test node_modules/.bin/mocha test/* -R spec",
     "postinstall": "npm run setup",
     "setup": "node scripts/setup.js"
   },

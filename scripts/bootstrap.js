@@ -8,8 +8,9 @@ var log      = require('../lib/log');
 var async    = require('async');
 var Identity = require('../lib/identity');
 
-module.exports = function(callback) {
+module.exports = function(datadir, callback) {
   callback = callback || new Function();
+  datadir  = datadir || HOME + '/.dside';
 
   async.series([
     checkAppDir,
@@ -23,10 +24,10 @@ module.exports = function(callback) {
 };
 
 function checkAppDir(callback) {
-  fs.exists(HOME + '/.dside', function(exists) {
+  fs.exists(datadir, function(exists) {
     if (!exists) {
-      log.info('creating app directory at ' + HOME + '/.dside');
-      return fs.mkdir(HOME + '/.dside', function(err) {
+      log.info('creating app directory at ' + datadir);
+      return fs.mkdir(datadir, function(err) {
         if (err) return callback(err);
         callback()
       });
@@ -37,12 +38,12 @@ function checkAppDir(callback) {
 };
 
 function checkPrivateKey(callback) {
-  fs.exists(HOME + '/.dside/identity.key', function(exists) {
+  fs.exists(datadir + '/identity.key', function(exists) {
     if (!exists) {
       log.info('generating identity - this can take a moment');
       return Identity.generate(function(err, keypair) {
-        fs.writeFileSync(HOME + '/.dside/identity.key', keypair.privateKey);
-        fs.writeFileSync(HOME + '/.dside/identity.pub', keypair.publicKey);
+        fs.writeFileSync(datadir + '/identity.key', keypair.privateKey);
+        fs.writeFileSync(datadir + '/identity.pub', keypair.publicKey);
         callback();
       });
     }
@@ -54,8 +55,8 @@ function checkPrivateKey(callback) {
 function createConfigFile(callback) {
   var defaultConfig = JSON.stringify(require('../config.example'), null, 2);
 
-  log.info('copied default config to ' + HOME + '/.dside/config.json');
-  fs.writeFile(HOME + '/.dside/config.json', defaultConfig, function(err) {
+  log.info('copied default config to ' + datadir + '/config.json');
+  fs.writeFile(datadir + '/config.json', defaultConfig, function(err) {
     if (err) return callback(err);
     callback();
   });

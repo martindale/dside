@@ -6,7 +6,8 @@ var fs              = require('fs');
 var program         = require('commander');
 var DSide           = require('..');
 var bootstrap       = require('../scripts/bootstrap');
-var defaultConfPath = process.env.HOME + '/.dside/config.json';
+var defaultDataDir  = process.env.HOME + '/.dside';
+var defaultConfPath = defaultDataDir + '/config.json';
 
 program.version(require('../package').version);
 
@@ -59,8 +60,9 @@ program
 program
   .command('bootstrap')
   .description('generate identity keys and default config file')
+  .option('-d, --datadir <dirpath>', 'directory for app data', defaultDataDir)
   .action(function(env) {
-    bootstrap(function(err) {
+    bootstrap(env.datadir, function(err) {
       if (err) return log.err(err);
       log.info('finished');
     });
