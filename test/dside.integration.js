@@ -106,6 +106,18 @@ describe('DSide', function() {
       node2.broadcast('bar', 'baz');
     });
 
+    it.skip('should store sent messages', function(done) {
+
+    });
+
+    it.skip('should store valid received messages', function(done) {
+
+    });
+
+    it.skip('should not store invalid messages', function(done) {
+
+    });
+
   });
 
 });
