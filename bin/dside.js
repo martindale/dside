@@ -46,7 +46,7 @@ program
 
     var rpcc = new RPC.Client(require(defaultConfPath));
 
-    rpcc.recall(env.key, function(err, doc) {
+    rpcc.recall(env.key, env.identity, function(err, doc) {
       if (err) return log.error(err.message || err);
       log.info('recalled value "' + doc.value + '" for key "' + doc.key + '"');
     });
@@ -58,10 +58,31 @@ program
   .option('-k, --key <key>', 'key for consensus (value aggregate)')
   .action(function(env) {
     if (!env.key) {
-      return log.error('a topic is required to gain consensus')
+      return log.error('a key is required to aggregate values for consensus')
     }
 
+    var rpcc = new RPC.Client(require(defaultConfPath));
 
+    rpcc.consensus(env.key, function(err, docs) {
+      if (err) return log.error(err.message || err);
+      if (!docs.length) return log.info('no results to aggregate for that key');
+
+      log.info('---------------');
+
+      docs.forEach(function(doc, index) {
+        log.info('');
+        if (index === 0) {
+          log.info('Top Value: ' + doc.value);
+          log.info('Records:   ' + doc.records);
+          log.info('');
+          log.info('---------------');
+        }
+        else {
+          log.info('Value:   ' + doc.value);
+          log.info('Records: ' + doc.records);
+        }
+      });
+    });
   });
 
 program
