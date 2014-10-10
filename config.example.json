@@ -13,5 +13,6 @@
   "storageFile": "dside.tiny",
   "privateKey": "identity.key",
   "publicKey": "identity.pub",
-  "rpcPort": 8134
+  "rpcPort": 8134,
+  "debug": true
 }
