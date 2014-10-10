@@ -35,13 +35,17 @@ program
   .command('recall')
   .description('recall a record from storage')
   .option('-k, --key <key>', 'key for submitted value')
-  .option('-i, --identity <id>', 'pubkey hash of record author', new Identity({
-    pubKey: 'identity.pub',
-    privKey: '/identity.key'
-  }).id())
+  .option('-i, --identity <id>', 'pubkey hash of record author')
   .action(function(env) {
     if (!env.key) {
       return log.error('a key is required to recall')
+    }
+
+    if (!env.identity) {
+      env.identity = new Identity({
+        pubKey: 'identity.pub',
+        privKey: 'identity.key'
+      }).id();
     }
 
     var rpcc = new RPC.Client(require(defaultConfPath));
