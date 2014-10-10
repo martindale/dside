@@ -1,6 +1,6 @@
 {
   "name": "dside",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "decentralized consensus proof of concept",
   "main": "index.js",
   "bin": {
