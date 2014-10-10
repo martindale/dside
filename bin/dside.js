@@ -8,28 +8,53 @@ var DSide           = require('..');
 var bootstrap       = require('../scripts/bootstrap');
 var defaultDataDir  = process.env.HOME + '/.dside';
 var defaultConfPath = defaultDataDir + '/config.json';
+var Identity        = require('../lib/identity');
 
 program.version(require('../package').version);
 
 program
-  .command('vote')
+  .command('submit')
   .description('submit a key-value record to the network')
-  .option('-t, --topic <topic>', 'topic for submitted answer')
-  .option('-a, --answer <answer>', 'answer for specified topic')
+  .option('-k, --key <key>', 'key for submitted value')
+  .option('-v, --value <value>', 'value for specified key')
   .action(function(env) {
-    if (!env.topic || !env.answer) {
-      return log.error('a topic and answer are required to vote')
+    if (!env.key || !env.value) {
+      return log.error('a key and value are required to vote')
     }
 
 
   });
 
 program
+  .command('recall')
+  .description('recall a record from storage')
+  .option('-k, --key <key>', 'key for submitted value')
+  .option('-i, --identity <id>', 'pubkey hash of record author', new Identity({
+    pubKey: 'identity.pub',
+    privKey: '/identity.key'
+  }).id())
+  .action(function(env) {
+    if (!env.key) {
+      return log.error('a key is required to recall')
+    }
+
+    var dside = new DSide(require(defaultConfPath));
+
+    dside.store.on('ready', function() {
+      dside.store.db.get(env.key + '::' + env.identity, function(err, doc) {
+        if (err) return log.error(err.message);
+        var body = JSON.parse(doc.body);
+        log.info('recalled record:', body.key + ' = ' + body.value);
+      });
+    });
+  });
+
+program
   .command('consensus')
   .description('retrieve value aggregate for given key')
-  .option('-t, --topic <topic>', 'topic for consensus')
+  .option('-k, --key <key>', 'key for consensus (value aggregate)')
   .action(function(env) {
-    if (!env.topic) {
+    if (!env.key) {
       return log.error('a topic is required to gain consensus')
     }
 
