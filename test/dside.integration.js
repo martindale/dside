@@ -85,6 +85,8 @@ describe('DSide', function() {
 
   describe('#broadcast', function() {
 
+    var messageKey = null;
+
     it('should send a message to all other nodes', function(done) {
       var recvd = 0;
       node2.once('message', function(msg) {
@@ -106,16 +108,31 @@ describe('DSide', function() {
       node2.broadcast('bar', 'baz');
     });
 
-    it.skip('should store sent messages', function(done) {
+    it('should store sent messages', function(done) {
+      node1.broadcast('foo', 'bar', function(err, msg) {
+        should.not.exist(err);
+        should.exist(msg);
 
+        messageKey = 'foo::' + msg.data('id');
+
+        node1.store.db.get(messageKey, function(err, doc) {
+          should.exist(doc);
+          should.exist(doc.body);
+          should.exist(doc.pubkey);
+          should.exist(doc.signature);
+          done();
+        });
+      });
     });
 
-    it.skip('should store valid received messages', function(done) {
-
-    });
-
-    it.skip('should not store invalid messages', function(done) {
-
+    it('should store valid received messages', function(done) {
+      node2.store.db.get(messageKey, function(err, doc) {
+        should.exist(doc);
+        should.exist(doc.body);
+        should.exist(doc.pubkey);
+        should.exist(doc.signature);
+        done();
+      });
     });
 
   });
