@@ -21,7 +21,8 @@ describe('DSide', function() {
     pingTimeout: 3000,
     storageFile: 'test1.tiny',
     privateKey: require('./data/key1.json').privateKey,
-    publicKey: require('./data/key1.json').publicKey
+    publicKey: require('./data/key1.json').publicKey,
+    rpcPort: 8136
   };
 
   var config2 = {
@@ -34,7 +35,8 @@ describe('DSide', function() {
     pingTimeout: 3000,
     storageFile: 'test2.tiny',
     privateKey: require('./data/key2.json').privateKey,
-    publicKey: require('./data/key2.json').publicKey
+    publicKey: require('./data/key2.json').publicKey,
+    rpcPort: 8137
   };
 
   var config3 = {
@@ -47,7 +49,8 @@ describe('DSide', function() {
     pingTimeout: 3000,
     storageFile: 'test3.tiny',
     privateKey: require('./data/key3.json').privateKey,
-    publicKey: require('./data/key3.json').publicKey
+    publicKey: require('./data/key3.json').publicKey,
+    rpcPort: 8138
   };
 
   before(function(done) {

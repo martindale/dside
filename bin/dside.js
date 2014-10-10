@@ -9,6 +9,7 @@ var bootstrap       = require('../scripts/bootstrap');
 var defaultDataDir  = process.env.HOME + '/.dside';
 var defaultConfPath = defaultDataDir + '/config.json';
 var Identity        = require('../lib/identity');
+var RPC             = require('../lib/rpc');
 
 program.version(require('../package').version);
 
@@ -22,7 +23,12 @@ program
       return log.error('a key and value are required to vote')
     }
 
+    var rpcc = new RPC.Client(require(defaultConfPath));
 
+    rpcc.submit(env.key, env.value, function(err, doc) {
+      if (err) return log.error(err.message);
+      log.info('submitted value "' + doc.value + '" for key "' + doc.key + '"');
+    });
   });
 
 program
@@ -38,14 +44,11 @@ program
       return log.error('a key is required to recall')
     }
 
-    var dside = new DSide(require(defaultConfPath));
+    var rpcc = new RPC.Client(require(defaultConfPath));
 
-    dside.store.on('ready', function() {
-      dside.store.db.get(env.key + '::' + env.identity, function(err, doc) {
-        if (err) return log.error(err.message);
-        var body = JSON.parse(doc.body);
-        log.info('recalled record:', body.key + ' = ' + body.value);
-      });
+    rpcc.recall(env.key, function(err, doc) {
+      if (err) return log.error(err.message || err);
+      log.info('recalled value "' + doc.value + '" for key "' + doc.key + '"');
     });
   });
 

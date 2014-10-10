@@ -12,5 +12,6 @@
   "pingTimeout": 3000,
   "storageFile": "dside.tiny",
   "privateKey": "identity.key",
-  "publicKey": "identity.pub"
+  "publicKey": "identity.pub",
+  "rpcPort": 8134
 }
