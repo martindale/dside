@@ -1,6 +1,7 @@
 var should   = require('should');
 var DSide    = require('..');
 var Identity = require('../lib/identity');
+var Message  = require('../lib/message');
 var async    = require('async');
 var fs       = require('fs');
 var APP      = process.env.HOME + '/.dside/';
@@ -136,6 +137,30 @@ describe('DSide', function() {
         should.exist(doc.signature);
         done();
       });
+    });
+
+  });
+
+  describe('@store', function() {
+
+    describe('#state', function() {
+
+      it('should stream the database contents properly', function(done) {
+        var messages = [];
+        var state    = node1.store.state();
+
+        state.pipe(
+          new Message.Transporter()
+        ).pipe(new Message.Parser()).on('data', function(d) {
+          messages.push(d);
+        });
+
+        state.on('close', function() {
+          messages.should.have.lengthOf(2);
+          done();
+        });
+      });
+
     });
 
   });
