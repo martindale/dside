@@ -107,7 +107,9 @@ program
       return log.error('failed to parse config file');
     }
 
-    new DSide(config).start();
+    new DSide(config).on('ready', function() {
+      this.start();
+    });
   });
 
 program

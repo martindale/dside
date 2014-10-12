@@ -99,6 +99,8 @@ var DSide = require('dside');
 // create a dside node with a config object
 var node = new DSide(config);
 
-// start node
-node.start();
+node.on('ready', function() {
+  // start node
+  node.start();
+});
 ```

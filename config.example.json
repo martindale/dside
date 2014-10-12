@@ -1,8 +1,7 @@
 {
-  "address": "",
   "port": 8133,
   "seeds": [
-    { "address": "", "port": 8133 }
+    { "address": "murderoti.ca", "port": 8133 }
   ],
   "trust": [
     "*"
