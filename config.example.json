@@ -7,7 +7,7 @@
     "*"
   ],
   "minPeers": 3,
-  "maxPeers": 12,
+  "maxPeers": 64,
   "pingTimeout": 3000,
   "storageFile": "dside.tiny",
   "privateKey": "identity.key",
