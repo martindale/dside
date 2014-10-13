@@ -5,6 +5,10 @@ var Message  = require('../lib/message');
 var async    = require('async');
 var fs       = require('fs');
 var APP      = process.env.HOME + '/.dside/';
+var sinon    = require('sinon');
+
+// don't actually forward any ports
+DSide.prototype._setupNAT = sinon.stub().callsArg(0);
 
 describe('DSide', function() {
 
@@ -69,20 +73,26 @@ describe('DSide', function() {
 
     it('should start the seed node', function(done) {
       node1 = new DSide(config1);
-      node1.start();
-      done();
+      node1.on('ready', function() {
+        node1.start();
+        done();
+      });
     });
 
     it('should start a node and connect to seed', function(done) {
       node2 = new DSide(config2);
-      node2.start();
-      node2.node.on('connect', done);
+      node2.on('ready', function() {
+        node2.start();
+        node2.node.on('connect', done);
+      });
     });
 
     it('should start a node and connect to new seed', function(done) {
       node3 = new DSide(config3);
-      node3.start();
-      node3.node.on('connect', done);
+      node3.on('ready', function() {
+        node3.start();
+        node3.node.on('connect', done);
+      });
     });
 
   });
