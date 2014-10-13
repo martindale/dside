@@ -1,6 +1,6 @@
 {
   "name": "dside",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "decentralized consensus proof of concept",
   "main": "index.js",
   "bin": {
@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "mocha": "^1.21.4",
-    "should": "^4.0.4"
+    "should": "^4.0.4",
+    "sinon": "^1.10.3"
   }
 }
